@@ -116,7 +116,7 @@ main() {
     check_db_connection
     
     # Create migrations for each app
-    for app in products packages users orders payments; do
+    for app in locations; do
         if [ -d "$app" ]; then
             create_migrations "$app"
         else
