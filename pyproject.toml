@@ -1,0 +1,18 @@
+[tool.black]
+line-length = 88
+target-version = ['py312']
+skip-string-normalization = false
+include = '\.pyi?$'
+force-exclude = '''
+/(
+    migrations
+  | __pycache__
+  | \.git
+  | \.pytest_cache
+  | build
+  | dist
+  | env
+  | venv
+  | \.venv
+)/
+'''
