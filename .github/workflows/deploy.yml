@@ -48,4 +48,4 @@ jobs:
         if: matrix.check == 'black'
         run: |
           # Only check Python files in the main directories
-          black --check core/ users/ products/ packages/ orders/ payments/ manage.py
+          black --check core/ locations/  manage.py
