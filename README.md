@@ -1,0 +1,1 @@
+This is django practice project of olx-clone
