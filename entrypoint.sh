@@ -99,8 +99,6 @@ try:
         User.objects.create_superuser(
             email=admin_email,
             password=admin_password,
-            first_name='Admin',
-            last_name='User'
         )
         print('Superuser created successfully')
     else:
@@ -116,7 +114,7 @@ main() {
     check_db_connection
     
     # Create migrations for each app
-    for app in locations; do
+    for app in locations users; do
         if [ -d "$app" ]; then
             create_migrations "$app"
         else
