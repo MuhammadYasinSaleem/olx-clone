@@ -7,10 +7,8 @@ User = get_user_model()
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
-        # Use email instead of username
         credentials = {"email": attrs.get("email"), "password": attrs.get("password")}
 
-        # This will authenticate using email
         return super().validate(credentials)
 
     @classmethod
@@ -140,7 +138,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
                 {"password_confirm": "Password fields didn't match."}
             )
 
-        # Remove password_confirm from validated data as it's not a model field
         attrs.pop("password_confirm")
 
         return attrs
@@ -151,7 +148,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         """
         password = validated_data.pop("password")
 
-        # Role is optional → set default if not provided
         role = validated_data.get("role", User.Role.BUYER)
         validated_data["role"] = role
 

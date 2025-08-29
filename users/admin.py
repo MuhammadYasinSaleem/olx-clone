@@ -1,4 +1,3 @@
-# users/admin.py
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
@@ -9,7 +8,6 @@ from .models import User
 class CustomUserAdmin(UserAdmin):
     model = User
 
-    # Fields to display in list view
     list_display = (
         "email",
         "name",
@@ -31,7 +29,6 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ("email", "name", "phone_number")
     ordering = ("-joined_at",)
 
-    # Fields for editing users
     fieldsets = (
         (None, {"fields": ("email", "password")}),
         (
@@ -55,7 +52,6 @@ class CustomUserAdmin(UserAdmin):
         (_("Important dates"), {"fields": ("last_login", "joined_at")}),
     )
 
-    # Fields for adding users
     add_fieldsets = (
         (
             None,

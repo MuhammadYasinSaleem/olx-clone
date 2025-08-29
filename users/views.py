@@ -24,7 +24,6 @@ class UserRegistrationView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
 
-        # Use CustomTokenObtainPairSerializer to generate token with extra claims
         refresh = CustomTokenObtainPairSerializer.get_token(user)
         access = refresh.access_token
 
