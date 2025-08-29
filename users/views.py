@@ -1,6 +1,5 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import get_user_model
 from .serializers import (
     UserRegistrationSerializer,
@@ -84,19 +83,3 @@ class UserDetailView(generics.RetrieveAPIView):
 
     def get_queryset(self):
         return User.objects.all()
-
-
-@api_view(["GET"])
-@permission_classes([permissions.IsAuthenticated])
-def user_role_info(request):
-    """Get current user's role information"""
-    user = request.user
-    return Response(
-        {
-            "role": user.role,
-            "role_display": user.get_role_display(),
-            "is_admin": user.is_admin,
-            "is_seller": user.is_seller,
-            "is_buyer": user.is_buyer,
-        }
-    )

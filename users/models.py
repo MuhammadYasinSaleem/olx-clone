@@ -14,7 +14,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(_("full name"), max_length=255)
     phone_number = models.CharField(max_length=20, blank=True)
     profile_picture_url = models.URLField(max_length=512, blank=True)
-    joined_at = models.DateTimeField(auto_now_add=True)
     location = models.ForeignKey(
         "locations.Location", on_delete=models.SET_NULL, null=True, blank=True
     )
@@ -29,7 +28,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(auto_now_add=True)
-    last_login = models.DateTimeField(null=True, blank=True)
 
     objects = CustomUserManager()
 
@@ -37,7 +35,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     class Meta:
-        ordering = ["-joined_at"]
+        ordering = ["-date_joined"]
 
     def __str__(self):
         return self.email

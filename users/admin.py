@@ -12,11 +12,13 @@ class CustomUserAdmin(UserAdmin):
         "email",
         "name",
         "role",
+        "phone_number",
+        "location",
         "is_superuser",
         "is_verified",
         "is_staff",
         "is_active",
-        "joined_at",
+        "date_joined",
     )
     list_filter = (
         "role",
@@ -24,10 +26,10 @@ class CustomUserAdmin(UserAdmin):
         "is_verified",
         "is_staff",
         "is_active",
-        "joined_at",
+        "date_joined",
     )
     search_fields = ("email", "name", "phone_number")
-    ordering = ("-joined_at",)
+    ordering = ("-date_joined",)
 
     fieldsets = (
         (None, {"fields": ("email", "password")}),
@@ -49,7 +51,7 @@ class CustomUserAdmin(UserAdmin):
                 )
             },
         ),
-        (_("Important dates"), {"fields": ("last_login", "joined_at")}),
+        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
 
     add_fieldsets = (

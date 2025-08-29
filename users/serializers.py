@@ -25,20 +25,16 @@ class SafeUserSerializer(serializers.ModelSerializer):
     Safe serializer for public user data (when viewing other users)
     """
 
-    role_display = serializers.CharField(source="get_role_display", read_only=True)
-
     class Meta:
         model = User
-        fields = ("id", "name", "role_display", "joined_at")
-        read_only_fields = ("id", "name", "role_display", "joined_at")
+        fields = ("id", "name", "date_joined")
+        read_only_fields = ("id", "name", "date_joined")
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
     """
     Serializer for user's own profile (includes private data)
     """
-
-    role_display = serializers.CharField(source="get_role_display", read_only=True)
 
     class Meta:
         model = User
@@ -48,9 +44,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "name",
             "phone_number",
             "role",
-            "role_display",
             "profile_picture_url",
-            "joined_at",
+            "date_joined",
             "location",
             "is_verified",
             "is_active",
@@ -59,21 +54,18 @@ class UserProfileSerializer(serializers.ModelSerializer):
         read_only_fields = (
             "id",
             "email",
-            "joined_at",
+            "date_joined",
             "is_active",
             "last_login",
-            "role_display",
             "is_verified",
             "role",
-        )  # Make role read-only
+        )
 
 
 class AdminUserSerializer(serializers.ModelSerializer):
     """
     Serializer for admin use only (includes all fields)
     """
-
-    role_display = serializers.CharField(source="get_role_display", read_only=True)
 
     class Meta:
         model = User
@@ -83,9 +75,8 @@ class AdminUserSerializer(serializers.ModelSerializer):
             "name",
             "phone_number",
             "role",
-            "role_display",
             "profile_picture_url",
-            "joined_at",
+            "date_joined",
             "location",
             "is_verified",
             "is_active",
@@ -93,7 +84,7 @@ class AdminUserSerializer(serializers.ModelSerializer):
             "is_staff",
             "is_superuser",
         )
-        read_only_fields = ("id", "joined_at", "last_login")
+        read_only_fields = ("id", "date_joined", "last_login")
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):

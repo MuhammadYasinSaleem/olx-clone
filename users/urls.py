@@ -1,13 +1,7 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from users.serializers import CustomTokenObtainPairSerializer
-from .views import (
-    UserRegistrationView,
-    UserProfileView,
-    UserListView,
-    UserDetailView,
-    user_role_info,
-)
+from .views import UserRegistrationView, UserProfileView, UserListView, UserDetailView
 
 urlpatterns = [
     path("register/", UserRegistrationView.as_view(), name="user-register"),
@@ -18,7 +12,6 @@ urlpatterns = [
         name="token_obtain_pair",
     ),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("role-info/", user_role_info, name="user-role-info"),
     path("", UserListView.as_view(), name="user-list"),
     path("<int:pk>/", UserDetailView.as_view(), name="user-detail"),
 ]
