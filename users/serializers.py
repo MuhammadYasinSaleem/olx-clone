@@ -20,17 +20,6 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
 
-class SafeUserSerializer(serializers.ModelSerializer):
-    """
-    Safe serializer for public user data (when viewing other users)
-    """
-
-    class Meta:
-        model = User
-        fields = ("id", "name", "date_joined")
-        read_only_fields = ("id", "name", "date_joined")
-
-
 class UserProfileSerializer(serializers.ModelSerializer):
     """
     Serializer for user's own profile (includes private data)
@@ -60,31 +49,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "is_verified",
             "role",
         )
-
-
-class AdminUserSerializer(serializers.ModelSerializer):
-    """
-    Serializer for admin use only (includes all fields)
-    """
-
-    class Meta:
-        model = User
-        fields = (
-            "id",
-            "email",
-            "name",
-            "phone_number",
-            "role",
-            "profile_picture_url",
-            "date_joined",
-            "location",
-            "is_verified",
-            "is_active",
-            "last_login",
-            "is_staff",
-            "is_superuser",
-        )
-        read_only_fields = ("id", "date_joined", "last_login")
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):

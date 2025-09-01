@@ -4,8 +4,6 @@ from django.contrib.auth import get_user_model
 from .serializers import (
     UserRegistrationSerializer,
     UserProfileSerializer,
-    SafeUserSerializer,
-    AdminUserSerializer,
     UserUpdateSerializer,
     CustomTokenObtainPairSerializer,
 )
@@ -46,40 +44,11 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user
 
-
-class UserListView(generics.ListAPIView):
-    permission_classes = [permissions.IsAdminUser]
-
-    def get_serializer_class(self):
-        # Use SafeUserSerializer for non-superuser admins, AdminUserSerializer for superusers
-        if self.request.user.is_superuser:
-            return AdminUserSerializer
-        return SafeUserSerializer
-
-    def get_queryset(self):
-        # Only admins can see all users
-        if self.request.user.is_admin:
-            return User.objects.all()
-        return User.objects.none()
-
-
-class UserDetailView(generics.RetrieveAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_serializer_class(self):
-        user = self.get_object()
-        requester = self.request.user
-
-        # Users can see their own full profile
-        if user == requester:
-            return UserProfileSerializer
-
-        # Admins can see full profiles of other users
-        if requester.is_superuser:
-            return AdminUserSerializer
-
-        # Regular users can only see safe info of other users
-        return SafeUserSerializer
-
-    def get_queryset(self):
-        return User.objects.all()
+    def update(self, request, *args, **kwargs):
+        super().update(request, *args, **kwargs)
+        return Response(
+            {
+                "message": "Profile updated successfully",
+                "data": UserUpdateSerializer(self.request.user).data,
+            }
+        )
