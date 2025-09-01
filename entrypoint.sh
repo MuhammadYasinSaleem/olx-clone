@@ -115,8 +115,8 @@ main() {
     # Check database connection
     check_db_connection
     
-    # Create migrations for each app
-    for app in locations; do
+    
+    for app in locations users categories; do
         if [ -d "$app" ]; then
             create_migrations "$app"
         else

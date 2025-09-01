@@ -42,10 +42,10 @@ jobs:
         if: matrix.check == 'flake8'
         run: |
           # Only check Python files in the main directories
-          flake8 core/ locations/ manage.py
+          flake8 core/ locations/ users/ categories/ manage.py
 
       - name: Run black
         if: matrix.check == 'black'
         run: |
           # Only check Python files in the main directories
-          black --check core/ locations/  manage.py
+          black --check core/ locations/ users/ categories/ manage.py
