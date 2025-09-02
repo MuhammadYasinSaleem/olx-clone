@@ -44,3 +44,5 @@ uritemplate==4.2.0
 urllib3==2.5.0
 virtualenv==20.33.1
 webencodings==0.5.1
+factory_boy>=3.3.3
+faker>=37.6.0
