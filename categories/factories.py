@@ -15,7 +15,7 @@ class CategoryGroupFactory(DjangoModelFactory):
         """Create a group with associated categories"""
         group = cls.create(**kwargs)
         for i in range(num_categories):
-            CategoryFactory(group=group, name=f"{group.name} Category {i+1}")
+            CategoryFactory(group=group, name=f"{group.name} Category {i + 1}")
         return group
 
 
