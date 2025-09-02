@@ -32,7 +32,7 @@ class CategoryFactory(DjangoModelFactory):
         categories = []
         for i in range(num_categories):
             category = cls.create(
-                group=group, name=f"{group.name} Item {i+1}", **kwargs
+                group=group, name=f"{group.name} Item {i + 1}", **kwargs
             )
             categories.append(category)
         return categories
