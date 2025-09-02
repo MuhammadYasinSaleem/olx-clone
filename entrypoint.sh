@@ -71,6 +71,30 @@ apply_migrations() {
     fi
 }
 
+apply_seed(){
+    echo "Seeding initial locations..."
+    if python manage.py seed_locations --count 20; then
+        echo "✅ Locations seeded successfully!"
+    else
+        echo "⚠️  Location seeding failed"
+    fi
+    
+    echo "Seeding initial users..."
+    if python manage.py seed_users --count 30 --ratio="70:30"; then
+        echo "✅ Users seeded successfully!"
+    else
+        echo "⚠️  User seeding failed"
+    fi
+
+    echo "Seeding initial categories & groups..."
+    if python manage.py seed_categories --groups 5 --categories 5; then
+        echo "✅ Categories & Groups seeded successfully!"
+    else
+        echo "⚠️  Category seeding failed"
+    fi
+    
+    echo "🎉 Seeding process completed!"
+}
 
 collect_static() {
     if [ "$DEBUG" = "0" ]; then
@@ -113,7 +137,7 @@ main() {
     check_db_connection
     
     
-    for app in locations users; do
+    for app in locations users categories; do
         if [ -d "$app" ]; then
             create_migrations "$app"
         else
@@ -124,6 +148,8 @@ main() {
   
     apply_migrations
     
+    apply_seed
+
     
     collect_static
     
