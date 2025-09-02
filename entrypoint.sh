@@ -1,8 +1,7 @@
 #!/bin/sh
 
-set -e  # Exit on any error
+set -e  
 
-# Function to check database connection
 check_db_connection() {
     echo "Waiting for database..."
     local max_attempts=30
@@ -47,7 +46,7 @@ except Exception as e:
     echo "Database is ready!"
 }
 
-# Function to create migrations for an app if needed
+
 create_migrations() {
     local app_name=$1
     local migration_dir="${app_name}/migrations"
@@ -61,7 +60,7 @@ create_migrations() {
     fi
 }
 
-# Function to apply migrations if needed
+
 apply_migrations() {
     echo "Checking for unapplied migrations..."
     if python manage.py showmigrations --plan | grep -q '\[ \]'; then
@@ -72,7 +71,7 @@ apply_migrations() {
     fi
 }
 
-# Function to collect static files if needed
+
 collect_static() {
     if [ "$DEBUG" = "0" ]; then
         echo "Collecting static files..."
@@ -82,7 +81,7 @@ collect_static() {
     fi
 }
 
-# Function to create superuser if needed
+
 create_superuser() {
     echo "Checking if superuser needs to be created..."
     python manage.py shell << EOF
@@ -99,8 +98,6 @@ try:
         User.objects.create_superuser(
             email=admin_email,
             password=admin_password,
-            first_name='Admin',
-            last_name='User'
         )
         print('Superuser created successfully')
     else:
@@ -110,13 +107,13 @@ except Exception as e:
 EOF
 }
 
-# Main execution
+
 main() {
-    # Check database connection
+    
     check_db_connection
     
-    # Create migrations for each app
-    for app in locations; do
+    
+    for app in locations users; do
         if [ -d "$app" ]; then
             create_migrations "$app"
         else
@@ -124,18 +121,18 @@ main() {
         fi
     done
     
-    # Apply migrations
+  
     apply_migrations
     
-    # Collect static files in production
+    
     collect_static
     
-    # Create superuser
+  
     create_superuser
     
     echo "Initialization complete. Starting server..."
     exec "$@"
 }
 
-# Run main function
+
 main "$@"
